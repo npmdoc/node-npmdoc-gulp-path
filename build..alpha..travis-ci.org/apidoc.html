@@ -1,0 +1,212 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/klauskpm/gulp-path"
+
+    >gulp-path (v3.0.3)</a>
+</h1>
+<h4>Creates file's paths in a simple and organized way</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-path">module gulp-path</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-path.Base">
+            function <span class="apidocSignatureSpan">gulp-path.</span>Base
+            <span class="apidocSignatureSpan">(opt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-path.filesPaths">
+            function <span class="apidocSignatureSpan">gulp-path.</span>filesPaths
+            <span class="apidocSignatureSpan">(sourcePaths, filesList, filesExtensions)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-path" id="apidoc.module.gulp-path">module gulp-path</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-path.Base" id="apidoc.element.gulp-path.Base">
+        function <span class="apidocSignatureSpan">gulp-path.</span>Base
+        <span class="apidocSignatureSpan">(opt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">class Base {
+    constructor(opt) {
+        if (typeof opt === &#x22;undefined&#x22; || !opt) {
+            opt = {
+                dest: &#x22;./&#x22;,
+                src: &#x22;./&#x22;
+            };
+        } else if (typeof opt === &#x22;string&#x22;) {
+            opt = {
+                dest: opt,
+                src: opt
+            };
+        }
+
+        this.basePaths = {
+            dest: opt.dest,
+            src: opt.src
+        };
+    }
+
+    Path (path, extension) {
+        return new Path(this.basePaths, path, extension);
+    }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+## Installation
+`$ npm install gulp-path`
+
+## Usage Example
+```js
+var gulpPath = require(&#x27;gulp-path&#x27;);
+
+var assets = new gulpPath.<span class="apidocCodeKeywordSpan">Base</span>({
+    src: &#x27;./assets/&#x27;,
+    dest: &#x27;./resources/&#x27;
+}),
+views = new gulpPath.Base(&#x27;./views/&#x27;),
+root = new gulpPath.Base(),
+app = new gulpPath.Base({
+    src: [
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-path.filesPaths" id="apidoc.element.gulp-path.filesPaths">
+        function <span class="apidocSignatureSpan">gulp-path.</span>filesPaths
+        <span class="apidocSignatureSpan">(sourcePaths, filesList, filesExtensions)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">filesPaths = function (sourcePaths, filesList, filesExtensions) {
+    if (typeof sourcePaths === &#x22;undefined&#x22; || !sourcePaths) {
+        sourcePaths = [&#x27;./&#x27;];
+    } else if (typeof sourcePaths === &#x22;string&#x22;) {
+        sourcePaths = [sourcePaths];
+    }
+
+    if (typeof filesList === &#x22;undefined&#x22; || !filesList) {
+        filesList = [&#x27;*&#x27;];
+    } else if (typeof filesList === &#x22;string&#x22;) {
+        filesList = [filesList];
+    }
+
+    if (typeof filesExtensions === &#x27;undefined&#x27; || !filesExtensions) {
+        filesExtensions =  [&#x27;&#x27;];
+    } else if (typeof filesExtensions === &#x27;string&#x27;) {
+        filesExtensions = [&#x27;.&#x27; + filesExtensions];
+    } else {
+        filesExtensions = filesExtensions.map(function (extension) {
+            return &#x27;.&#x27; + extension;
+        })
+    }
+
+    var paths = [];
+    sourcePaths.forEach(function (sourcePath) {
+        filesList.forEach(function (file) {
+            filesExtensions.forEach(function (fileExtension) {
+                paths.push(path.join(sourcePath, file + fileExtension));
+            })
+        });
+    });
+
+    return paths;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+console.log(
+    paths.img.files(null, [&#x27;png&#x27;, &#x27;jpg&#x27;, &#x27;gif&#x27;]),
+    paths.img.files(),
+    paths.js.files([&#x27;compiled&#x27;, &#x27;main&#x27;], &#x27;min.js&#x27;),
+    paths.fonts.files([&#x27;Roboto&#x27;, &#x27;glyphicons-halflings-regular&#x27;], [&#x27;eot&#x27;, &#x27;ttf&#x27;, &#x27;svg
+&#x27;, &#x27;woff&#x27;, &#x27;woff2&#x27;]),
+    paths.controllers.files(&#x27;homeController&#x27;, [&#x27;min.js&#x27;, &#x27;js&#x27;]),
+    paths.data.files([&#x27;main&#x27;, &#x27;sub-service&#x27;], [&#x27;min.js&#x27;, &#x27;js&#x27;]),
+    gulpPath.<span class="apidocCodeKeywordSpan">filesPaths</span>([&#x27;./app/&#x27;, &#x27;./resource/**/&#x27;], null, [&#x27
+;scss&#x27;, &#x27;css&#x27;])
+);
+```
+
+### Creating base paths
+After you require the gulp-path model (`var gulpPath = require(&#x27;gulp-path&#x27;)`),
+you need to create your base paths.
+And for that, you have 3 ways to do it.
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
